@@ -67,7 +67,7 @@ export function MyComponent() {
 
   //get completed task count
   async function completedTodo(count, value) {
-    console.log(' parseInt(value) ', parseInt(value));
+    console.log(" parseInt(value) ",parseInt(value))
     await setCount(count => count + parseInt(value));
   }
 
@@ -101,7 +101,7 @@ export function MyComponent() {
               ]);
               //get count of completed task
               if (isCompleted !== '') {
-                completedTodo(count, '+1');
+                  completedTodo(count, '+1');
               }
             }
             setIsLoading(true); /**all the tasks are loaded */
@@ -115,14 +115,15 @@ export function MyComponent() {
     getAllTasks();
   }, [db]);
 
+  
   useEffect(() => {
     completionPercentage();
   });
 
   //calculate the completed tasks percentage
-  function completionPercentage() {
-    console.log(' count in ', count);
-    const result = (count / todos.length) * 100;
+  function completionPercentage () {
+    console.log(" count in ",count);
+    const result = (count / (todos.length)) * 100;
     setPercent(parseInt(result));
     console.log('percentage : ', percent);
   }
@@ -138,11 +139,13 @@ export function MyComponent() {
       //if tasks is completed then update the completed date
       if (!isCompleted) {
         setTasDonedOn('');
+       
       } else {
         setTasDonedOn(today);
+        
       }
 
-      console.log('tasDonedOn', tasDonedOn);
+      console.log("tasDonedOn",tasDonedOn);
       db.transaction(tx => {
         const squery = 'UPDATE `mytask` SET `completed_on`=?  WHERE `name`=?;';
         tx.executeSql(
@@ -154,9 +157,9 @@ export function MyComponent() {
               console.log('Successfully Updated');
               //change completed tasks status
               if (!isCompleted) {
-                completedTodo(count, '+1');
+                completedTodo(count,'+1');
               } else {
-                completedTodo(count, '-1');
+                completedTodo(count,'-1');
               }
             }
           },
@@ -165,7 +168,9 @@ export function MyComponent() {
           },
         );
       });
+      
     });
+    
   };
 
   /**Delete the task using task_name */
@@ -212,22 +217,21 @@ export function MyComponent() {
         </TouchableOpacity>
       </View>
 
-      {todos.length > 0 ? (
-        <View style={styles.displayContent}>
-          <View style={styles.completionPercentage}>
-            {percent == 0 ? (
-              <Text> Start working on your tasks </Text>
-            ) : percent < 100 ? (
-              <Text> {percent}% tasks are completed </Text>
-            ) : (
-              <Text>
-                Congratulation, you met your mile stone!!!. Good going, keep it
-                up.{' '}
-              </Text>
-            )}
-          </View>
-          <ScrollView>
-            {todos.map(item => (
+      <View style={styles.completionPercentage}>
+        {percent == 0 ? (
+          <Text> Start working on your tasks </Text>
+        ) : percent < 100 ? (
+          <Text> {percent}% tasks are completed </Text>
+        ) : (
+          <Text>
+            Congratulation, you met your mile stone!!!. Good going, keep it up.{' '}
+          </Text>
+        )}
+      </View>
+     
+        <ScrollView style={{width: '100%'}}>
+          {todos.length > 0 ? (
+            todos.map(item => (
               <TodoList
                 text={item.text}
                 key={item.key}
@@ -235,14 +239,16 @@ export function MyComponent() {
                 setChecked={() => completeTodo(item.text, item.checked)}
                 deleteTodo={() => deleteTodo(item.text)}
               />
-            ))}
-          </ScrollView>
-        </View>
-      ) : (
-        <View style={styles.noTask}>
-          <Text style={styles.noTaskTitle}> No tasks planned for today</Text>
-        </View>
-      )}
+            ))
+          ) : (
+            <View style={styles.noTask}>
+              <Text style={styles.noTaskTitle}>
+                {' '}
+                No tasks planned for today
+              </Text>
+            </View>
+          )}
+        </ScrollView>
     </View>
   );
 }
@@ -254,10 +260,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  displayContent: {
-    flex: 1,
-    width: '100%'
   },
   completionPercentage: {
     marginTop: '5%',
