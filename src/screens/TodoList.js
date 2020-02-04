@@ -15,7 +15,7 @@ export default function TodoList(props) {
       <Icon
         name="square"
         size={30}
-        color="black"
+        color= {props.checked ? "green" : "black"}
         style={{marginLeft: 15}}
         onPress={props.setChecked}
       />
