@@ -1,10 +1,15 @@
 //import liraries
 import React, {Component, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity,CheckBox} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 // create a component
 export default function TodoList(props) {
+
+  if(props.checked){
+    const listbackcolor='green';
+  }
+
   return (
     <View style={styles.listContainer}>
       <Icon
@@ -14,7 +19,7 @@ export default function TodoList(props) {
         style={{marginLeft: 15}}
         onPress={props.setChecked}
       />
-      <View>
+      <View style={styles.taskContainer}>
         {props.checked && <View style={styles.verticalLine} />}
         <Text style={styles.listItem}>{props.text}</Text>
       </View>
@@ -24,7 +29,7 @@ export default function TodoList(props) {
         size={30}
         color={props.checked ? 'gray' : 'red'}
         disabled={props.checked}
-        style={{marginLeft: 'auto',marginRight:15}}
+        style={styles.deleteIcon}
         onPress={props.deleteTodo}
       />
     </View>
@@ -45,11 +50,9 @@ const styles = StyleSheet.create({
   listItem: {
     paddingBottom: 20,
     paddingLeft: 10,
-    marginTop: 6,
     borderColor: 'green',
     borderBottomWidth: 1,
     fontSize: 17,
-    fontWeight: 'bold',
   },
   verticalLine: {
     borderBottomColor: 'green',
@@ -57,7 +60,17 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     width: '100%',
     position: 'absolute',
-    marginTop: 15,
+    marginTop: 10,
     fontWeight: 'bold',
   },
+  deleteIcon : {
+    marginLeft: 'auto',
+    marginRight:15,
+    marginLeft:15
+  },
+  taskContainer : {
+    flex:1,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
 });

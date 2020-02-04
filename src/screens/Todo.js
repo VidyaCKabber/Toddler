@@ -11,21 +11,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import TodoList from './TodoList';
-
-var SQLite = require('react-native-sqlite-storage');
-var db = SQLite.openDatabase({
-  name: 'test2.sqlite3',
-  createFromLocation: '~todo.sqlite3',
-});
-
-//get the date in data/month/year format
-var date = new Date();
-today =
-  date.getDate() +
-  '/' +
-  parseInt(date.getMonth() + 1) +
-  '/' +
-  date.getFullYear();
+import {db} from './config/SqliteConnect';
+import {today, notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
 export function MyComponent() {
@@ -33,8 +20,8 @@ export function MyComponent() {
   const [value, setValue] = useState('');
   const [todos, setTodos] = useState([]);
   const [percent, setPercent] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [tasDonedOn, setTasDonedOn] = useState(today);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   const createTodo = () => {
     return new Promise(() => {
@@ -43,7 +30,7 @@ export function MyComponent() {
           'INSERT INTO `mytask` (`id`,`name`,`created_on`,`completed_on`) VALUES (?,?,?,?)';
         tx.executeSql(
           squery,
-          [Date.now(), value, today, ''],
+          [Date.now(), value, today, 0],
           (tx, results) => {
             console.log('Results', results.rowsAffected);
             if (results.rowsAffected > 0) {
@@ -53,6 +40,7 @@ export function MyComponent() {
                 {text: value, key: Date.now(), checked: false},
               ]);
               console.log('Created successfully!');
+              setIsLoading(false);
             } else {
               console.log('failed!');
             }
@@ -65,11 +53,13 @@ export function MyComponent() {
     });
   };
 
-  //get completed task count
+
+  //get completed task count, incrementing and decrementing both handled in the same function
   async function completedTodo(count, value) {
-    console.log(' parseInt(value) ', parseInt(value));
     await setCount(count => count + parseInt(value));
   }
+
+/** get all created tasks*/
 
   function getAllTasks() {
     return new Promise(() => {
@@ -86,7 +76,6 @@ export function MyComponent() {
             console.log('len : ', len);
             for (let i = 0; i < len; i++) {
               const isCompleted = results.rows.item(i).completed_on;
-
               /**store all created tasks in todos array */
               setTodos(todos => [
                 ...todos,
@@ -94,39 +83,42 @@ export function MyComponent() {
                   text: results.rows.item(i).name,
                   key: Date.now(),
                   checked:
-                    isCompleted == ''
+                    isCompleted == 0
                       ? false
-                      : true /** check the completed tasks */,
+                      : true /** isCompleted == 0 incomplete task */,
                 },
               ]);
-              //get count of completed task
-              if (isCompleted !== '') {
+              //get count of completed task,isCompleted != 0, completed tasks
+              if (isCompleted != 0) {
                 completedTodo(count, '+1');
               }
             }
-            setIsLoading(true); /**all the tasks are loaded */
+            setIsLoading(false); /**all the tasks are loaded */
           }
         });
       });
     });
   }
 
+
   useEffect(() => {
     getAllTasks();
   }, [db]);
+
 
   useEffect(() => {
     completionPercentage();
   });
 
+
   //calculate the completed tasks percentage
   function completionPercentage() {
-    console.log(' count in ', count);
     const result = (count / todos.length) * 100;
     setPercent(parseInt(result));
-    console.log('percentage : ', percent);
   }
-  const completeTodo = async (task_name, isCompleted) => {
+
+
+  const completeTodo = async(task_name, isChecked) => {
     setTodos(
       todos.map(todo => {
         if (todo.text === task_name) todo.checked = !todo.checked;
@@ -135,25 +127,18 @@ export function MyComponent() {
     );
 
     return new Promise(() => {
-      //if tasks is completed then update the completed date
-      if (!isCompleted) {
-        setTasDonedOn('');
-      } else {
-        setTasDonedOn(today);
-      }
-
-      console.log('tasDonedOn', tasDonedOn);
       db.transaction(tx => {
         const squery = 'UPDATE `mytask` SET `completed_on`=?  WHERE `name`=?;';
         tx.executeSql(
           squery,
-          [tasDonedOn, task_name],
+          [isChecked ? today : 0, task_name],
           (tx, results) => {
             console.log('Results', results.rowsAffected);
             if (results.rowsAffected > 0) {
               console.log('Successfully Updated');
+
               //change completed tasks status
-              if (!isCompleted) {
+              if (isChecked) {
                 completedTodo(count, '+1');
               } else {
                 completedTodo(count, '-1');
@@ -168,6 +153,7 @@ export function MyComponent() {
     });
   };
 
+
   /**Delete the task using task_name */
   const deleteTodo = task_name => {
     return new Promise(() => {
@@ -181,8 +167,9 @@ export function MyComponent() {
               /**Remove deleted item from the array */
               setTodos(todos.filter(todos => todos !== task_name));
 
-              getAllTasks(); /**Reload all tasks */
-              console.log('Deleted task is : ', task_name);
+              /**Reload all tasks */
+              getAllTasks(); 
+              console.log(task_name,'deleted successfully');
             } else {
               console.log('failed!');
             }
@@ -195,9 +182,10 @@ export function MyComponent() {
     });
   };
 
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Daily Plan</Text>
+      <Text style={styles.header}>Text</Text>
       <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
@@ -216,31 +204,39 @@ export function MyComponent() {
         <View style={styles.displayContent}>
           <View style={styles.completionPercentage}>
             {percent == 0 ? (
-              <Text> Start working on your tasks </Text>
+              <Text style={styles.message}>{startMsg}</Text>
             ) : percent < 100 ? (
-              <Text> {percent}% tasks are completed </Text>
-            ) : (
-              <Text>
-                Congratulation, you met your mile stone!!!. Good going, keep it
-                up.{' '}
+              <Text style={styles.message}>
+                {' '}
+                {percent}% tasks are completed{' '}
               </Text>
+            ) : (
+              <Text style={styles.message}>{completedMsg}</Text>
             )}
           </View>
           <ScrollView>
-            {todos.map(item => (
-              <TodoList
-                text={item.text}
-                key={item.key}
-                checked={item.checked}
-                setChecked={() => completeTodo(item.text, item.checked)}
-                deleteTodo={() => deleteTodo(item.text)}
-              />
-            ))}
+            {isLoading ? (
+              <View style={{flex: 1, paddingTop: 20}}>
+                <ActivityIndicator />
+              </View>
+            ) : (
+              todos.map(item => (
+                <TodoList
+                  text={item.text}
+                  key={item.key}
+                  checked={item.checked}
+                  setChecked={() =>
+                    completeTodo(item.text, (status = item.checked ? 0 : today))
+                  }
+                  deleteTodo={() => deleteTodo(item.text)}
+                />
+              ))
+            )}
           </ScrollView>
         </View>
       ) : (
         <View style={styles.noTask}>
-          <Text style={styles.noTaskTitle}> No tasks planned for today</Text>
+          <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
         </View>
       )}
     </View>
@@ -257,16 +253,22 @@ const styles = StyleSheet.create({
   },
   displayContent: {
     flex: 1,
-    width: '100%'
+    width: '100%',
+  },
+  message: {
+    fontSize: 20,
   },
   completionPercentage: {
-    marginTop: '5%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    paddingLeft: 20,
     flexDirection: 'row',
     borderColor: 'blue',
     borderBottomWidth: 3,
     width: '100%',
     alignItems: 'stretch',
-    minHeight: 40,
+    //minHeight: 50,
   },
   header: {
     marginTop: '15%',
@@ -287,7 +289,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
-    paddingLeft: 10,
+    paddingLeft: 20,
     minHeight: '3%',
   },
   noTask: {

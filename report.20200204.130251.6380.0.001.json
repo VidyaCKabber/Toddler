@@ -1,0 +1,404 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200204.130251.6380.0.001.json",
+    "dumpEventTime": "2020-02-04T13:02:51Z",
+    "dumpEventTimeStamp": "1580801571490",
+    "processId": 6380,
+    "cwd": "C:\\Users\\Vidya\\Desktop\\MobileApp\\Test",
+    "commandLine": [
+      "node",
+      "C:\\Users\\Vidya\\AppData\\Roaming\\npm\\\\node_modules\\react-native-cli\\index.js",
+      "log-android"
+    ],
+    "nodejsVersion": "v12.14.1",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.14.1",
+      "v8": "7.7.299.13-node.16",
+      "uv": "1.33.1",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.1",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.14.1/node-v12.14.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.14.1/node-v12.14.1.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.14.1/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.18362",
+    "osVersion": "Windows 10 Pro N",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i3-7100 CPU @ 3.90GHz",
+        "speed": 3912,
+        "user": 930921,
+        "nice": 0,
+        "sys": 636328,
+        "idle": 8117875,
+        "irq": 54375
+      },
+      {
+        "model": "Intel(R) Core(TM) i3-7100 CPU @ 3.90GHz",
+        "speed": 3912,
+        "user": 868015,
+        "nice": 0,
+        "sys": 412375,
+        "idle": 8404734,
+        "irq": 3437
+      },
+      {
+        "model": "Intel(R) Core(TM) i3-7100 CPU @ 3.90GHz",
+        "speed": 3912,
+        "user": 1084109,
+        "nice": 0,
+        "sys": 540218,
+        "idle": 8060796,
+        "irq": 3703
+      },
+      {
+        "model": "Intel(R) Core(TM) i3-7100 CPU @ 3.90GHz",
+        "speed": 3912,
+        "user": 1124468,
+        "nice": 0,
+        "sys": 414421,
+        "idle": 8146093,
+        "irq": 3078
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "Ethernet",
+        "internal": false,
+        "mac": "1c:1b:0d:c6:55:74",
+        "address": "fe80::305d:71c8:663b:7b88",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 16
+      },
+      {
+        "name": "Ethernet",
+        "internal": false,
+        "mac": "1c:1b:0d:c6:55:74",
+        "address": "192.168.0.8",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      }
+    ],
+    "host": "DESKTOP-4IEV6JB"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff6f2341759",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2345b7c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2344b38",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f243433b",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2c38c5e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2c20ca1",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2aee56c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2af6671",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2aebcd3",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2aea4a4",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2b0b775",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2877a49",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f306463d",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f30c97fe",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff6f2fe41cc",
+      "symbol": ""
+    },
+    {
+      "pc": "0x000003cf8051995c",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 12460032,
+    "totalCommittedMemory": 12460032,
+    "usedMemory": 10194792,
+    "availableMemory": 2188195392,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 1048576,
+        "committedMemory": 1048576,
+        "capacity": 1047488,
+        "used": 1047472,
+        "available": 16
+      },
+      "old_space": {
+        "memorySize": 7974912,
+        "committedMemory": 7974912,
+        "capacity": 7738232,
+        "used": 6755216,
+        "available": 983016
+      },
+      "code_space": {
+        "memorySize": 425984,
+        "committedMemory": 425984,
+        "capacity": 252992,
+        "used": 209760,
+        "available": 43232
+      },
+      "map_space": {
+        "memorySize": 1052672,
+        "committedMemory": 1052672,
+        "capacity": 1051280,
+        "used": 514480,
+        "available": 536800
+      },
+      "large_object_space": {
+        "memorySize": 1646592,
+        "committedMemory": 1646592,
+        "capacity": 1632016,
+        "used": 1632016,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3552,
+        "used": 3552,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1047488,
+        "used": 0,
+        "available": 1047488
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 0.406,
+    "kernelCpuSeconds": 0.203,
+    "cpuConsumptionPercent": 0.966667,
+    "maxRss": 44199936,
+    "pageFaults": {
+      "IORequired": 17632,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 925,
+      "writes": 5
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "=::": "::\\",
+    "=C:": "C:\\Users\\Vidya\\Desktop\\MobileApp\\Test",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "ANDROID_HOME": "C:\\Users\\Vidya\\Downloads\\Zipfile\\Android_SDK\\",
+    "APPDATA": "C:\\Users\\Vidya\\AppData\\Roaming",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "DESKTOP-4IEV6JB",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "C_MAKE": "C:\\Users\\Vidya\\Downloads\\Installers\\cmake-3.13.3-win64-x64\\bin",
+    "dp0": "C:\\Users\\Vidya\\AppData\\Roaming\\npm\\",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\Vidya",
+    "JAVA_HOME": "C:\\Program Files\\Java\\jdk1.8.0_141",
+    "LOCALAPPDATA": "C:\\Users\\Vidya\\AppData\\Local",
+    "LOGONSERVER": "\\\\DESKTOP-4IEV6JB",
+    "MAVEN_HOME": "C:\\Users\\Vidya\\Documents\\Meven\\apache-maven-3.5.0",
+    "NPMPath": "C:\\Users\\Vidya\\AppData\\Roaming\\npm",
+    "NUMBER_OF_PROCESSORS": "4",
+    "OneDrive": "C:\\Users\\Vidya\\OneDrive",
+    "OS": "Windows_NT",
+    "Path": "C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Skype\\Phone\\;C:\\Program Files\\MySQL\\MySQL Utilities 1.6\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32;%ANT_HOME%\\bin;C:\\Program Files\\Java\\jdk1.8.0_141\\bin;C:\\Users\\Vidya\\Documents\\Meven\\apache-maven-3.5.0\\bin;C:\\WINDOWS\\system32;C:\\Python27;C:\\Users\\Vidya\\Downloads\\Zipfile\\Android_SDK\\\\platform-tools;C:\\Users\\Vidya\\Downloads\\Zipfile\\Android_SDK\\\\tools;C:\\Program Files\\cURL\\bin;C:\\wamp64\\bin;C:\\Python27\\Scripts;C:\\AWS\\Distributed-setup-3;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\xampp\\php\\;C:\\Program Files\\CMake\\bin;C:\\WINDOWS\\system32\\config\\systemprofile\\.dnx\\bin;C:\\Program Files\\Microsoft DNX\\Dnvm\\;C:\\Program Files (x86)\\Windows Kits\\8.1\\Windows Performance Toolkit\\;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\Users\\Vidya\\AppData\\Roaming\\npm\\;C:\\Program Files (x86)\\Yarn\\bin\\;C:\\Users\\Vidya\\AppData\\Local\\Programs\\Python\\Python37;C:\\Users\\Vidya\\Downloads\\Installers\\cmake-3.13.3-win64-x64\\bin;C:\\Program Files\\Amazon\\AWSCLI\\bin\\;C:\\Users\\Vidya\\Downloads\\Zipfile\\Android_SDK\\tools\\bin\\;C:\\Strawberry\\c\\bin;C:\\Strawberry\\perl\\site\\bin;C:\\Strawberry\\perl\\bin;C:\\Program Files\\nodejs\\;C:\\Users\\Vidya\\Anaconda3;C:\\Users\\Vidya\\Anaconda3\\Library\\mingw-w64\\bin;C:\\Users\\Vidya\\Anaconda3\\Library\\usr\\bin;C:\\Users\\Vidya\\Anaconda3\\Library\\bin;C:\\Users\\Vidya\\Anaconda3\\Scripts;C:\\Users\\Vidya\\AppData\\Local\\Programs\\Python\\Python36-32\\Scripts\\;C:\\Users\\Vidya\\AppData\\Local\\Programs\\Python\\Python36-32\\;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Skype\\Phone\\;C:\\Program Files\\MySQL\\MySQL Utilities 1.6\\;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32;%ANT_HOME%\\bin;C:\\Program Files\\Java\\jdk1.8.0_141\\bin;C:\\Users\\Vidya\\Documents\\Meven\\apache-maven-3.5.0\\bin;C:\\WINDOWS\\system32;C:\\Python27;C:\\Program Files\\nodejs\\;C:\\Users\\Vidya\\Downloads\\Zip file\\Android_SDK\\\\platform-tools;C:\\Users\\Vidya\\Downloads\\Zip file\\Android_SDK\\\\tools;C:\\Program Files\\cURL\\bin;C:\\Program Files\\Amazon\\AWSCLI\\;C:\\wamp64\\bin;C:\\Python27\\Scripts;C:\\Users\\Vidya\\Documents\\Meven\\apache-maven-3.5.;C:\\wamp64\\bin\\php\\php5.6.25;C:\\Users\\Vidya\\AppData\\Local\\ComposerSetup\\bin;C:\\Users\\Vidya\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\Vidya\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Vidya\\AppData\\Local\\;C:\\Users\\Vidya\\Downloads\\Installers;C:\\Users\\Vidya\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Vidya\\AppData\\Local\\Programs\\Git\\cmd;C:\\Users\\Vidya\\AppData\\Roaming\\npm;C:\\Users\\Vidya\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Vidya\\AppData\\Local\\Programs\\Microsoft VS Code Insiders\\bin",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 158 Stepping 9, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "9e09",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Program Files (x86)\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "PY_HOME": "C:\\Users\\Vidya\\AppData\\Local\\Programs\\Python\\Python37",
+    "SESSIONNAME": "Console",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\Vidya\\AppData\\Local\\Temp",
+    "TMP": "C:\\Users\\Vidya\\AppData\\Local\\Temp",
+    "USERDOMAIN": "DESKTOP-4IEV6JB",
+    "USERDOMAIN_ROAMINGPROFILE": "DESKTOP-4IEV6JB",
+    "USERNAME": "Vidya",
+    "USERPROFILE": "C:\\Users\\Vidya",
+    "VBOX_MSI_INSTALL_PATH": "C:\\Program Files\\Oracle\\VirtualBox\\",
+    "VS110COMNTOOLS": "C:\\Program Files (x86)\\Microsoft Visual Studio 11.0\\Common7\\Tools\\",
+    "VS120COMNTOOLS": "C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\Common7\\Tools\\",
+    "VS140COMNTOOLS": "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\Tools\\",
+    "windir": "C:\\WINDOWS",
+    "_prog": "node"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\MSASN1.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\System32\\profapi.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMMBASE.dll",
+    "C:\\WINDOWS\\System32\\cfgmgr32.dll",
+    "C:\\WINDOWS\\System32\\bcryptPrimitives.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\System32\\powrprof.dll",
+    "C:\\WINDOWS\\System32\\UMPDC.dll",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\System32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll"
+  ]
+}
