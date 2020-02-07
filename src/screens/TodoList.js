@@ -1,6 +1,6 @@
 //import liraries
-import React, {Component, useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity,CheckBox} from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 // create a component
@@ -15,7 +15,7 @@ export default function TodoList(props) {
       <Icon
         name="square"
         size={30}
-        color= {props.checked ? "green" : "black"}
+        color= {props.checked ? 'green' : 'black'}
         style={{marginLeft: 15}}
         onPress={props.setChecked}
       />

@@ -1,5 +1,5 @@
 //import liraries
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -15,13 +15,12 @@ import {db} from './config/SqliteConnect';
 import {today, notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
-export function MyComponent() {
+export function Todo() {
   const [count, setCount] = useState(0);
   const [value, setValue] = useState('');
   const [todos, setTodos] = useState([]);
   const [percent, setPercent] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
 
   const createTodo = () => {
     return new Promise(() => {
@@ -53,13 +52,12 @@ export function MyComponent() {
     });
   };
 
-
   //get completed task count, incrementing and decrementing both handled in the same function
   async function completedTodo(count, value) {
     await setCount(count => count + parseInt(value));
   }
 
-/** get all created tasks*/
+  /** get all created tasks*/
 
   function getAllTasks() {
     return new Promise(() => {
@@ -100,16 +98,13 @@ export function MyComponent() {
     });
   }
 
-
   useEffect(() => {
     getAllTasks();
   }, [db]);
 
-
   useEffect(() => {
     completionPercentage();
   });
-
 
   //calculate the completed tasks percentage
   function completionPercentage() {
@@ -117,8 +112,7 @@ export function MyComponent() {
     setPercent(parseInt(result));
   }
 
-
-  const completeTodo = async(task_name, isChecked) => {
+  const completeTodo = async (task_name, isChecked) => {
     setTodos(
       todos.map(todo => {
         if (todo.text === task_name) todo.checked = !todo.checked;
@@ -153,7 +147,6 @@ export function MyComponent() {
     });
   };
 
-
   /**Delete the task using task_name */
   const deleteTodo = task_name => {
     return new Promise(() => {
@@ -168,8 +161,8 @@ export function MyComponent() {
               setTodos(todos.filter(todos => todos !== task_name));
 
               /**Reload all tasks */
-              getAllTasks(); 
-              console.log(task_name,'deleted successfully');
+              getAllTasks();
+              console.log(task_name, 'deleted successfully');
             } else {
               console.log('failed!');
             }
@@ -181,11 +174,12 @@ export function MyComponent() {
       });
     });
   };
-
-  
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Text</Text>
+        <Text
+          style={styles.header}>
+          TODAY'S TASKS
+        </Text>
       <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
@@ -271,11 +265,11 @@ const styles = StyleSheet.create({
     //minHeight: 50,
   },
   header: {
-    marginTop: '15%',
+    marginTop: 20,
     fontSize: 25,
     color: 'blue',
     fontWeight: 'bold',
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
   textInputContainer: {
     flexDirection: 'row',
