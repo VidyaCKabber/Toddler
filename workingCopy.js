@@ -301,3 +301,61 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+
+
+const insetBillDetails = () => {
+  return new Promise(() => {
+    db.transaction(tx => {
+      const squery =
+        'INSERT INTO `tablename` (`ItemId`,`ItemName`,`Price`,`Quantity`,`CategoryId`,`printId`,`storeId`,`printed`,`kitchenId`,`taxId`,`taxSet`,`TaxAmt`,`pmttype`,`datebill`,`uploaded`,`cooked1`,`cooked2`,`cookedby`,`cooked1time`,`cooked2time`,`partnername`,`orderid`,`delivered`,`deltime`) VALUES (?,?,?,?)';
+      tx.executeSql(
+        squery,
+        [value1,value2,value3,value4,],
+        (tx, results) => {
+          /** on success, Results = 1 */
+          console.log('Results', results.rowsAffected);
+          if (results.rowsAffected > 0) {
+            console.log('Inserted successfully!');
+          } else {
+            console.log('failed!');
+          }
+        },
+        error => {
+          console.log('failed because', error);
+        },
+      );
+    });
+  });
+};
+
+`ItemId`,`ItemName`,`Price`,`Quantity`,`CategoryId`,`printId`,`storeId`,
+`printed`,`kitchenId`,`taxId`,`taxSet`,`TaxAmt`,`pmttype`,`datebill`,`uploaded`,`cooked1`,`cooked2`,
+`cookedby`,`cooked1time`,`cooked2time`,`partnername`,`orderid`,`delivered`,`deltime`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

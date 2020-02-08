@@ -16,6 +16,7 @@ import {today, notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
 export function Todo() {
+
   const [count, setCount] = useState(0);
   const [value, setValue] = useState('');
   const [todos, setTodos] = useState([]);
@@ -140,7 +141,7 @@ export function Todo() {
             }
           },
           error => {
-            console.log('update failed!', error);
+            console.log('updation failed!', error);
           },
         );
       });
@@ -168,7 +169,7 @@ export function Todo() {
             }
           },
           error => {
-            console.log('failed!', error);
+            console.log('failed because', error);
           },
         );
       });
