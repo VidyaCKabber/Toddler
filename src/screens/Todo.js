@@ -16,10 +16,8 @@ import {notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
 export function Todo(props) {
-
-  
   const todoDate = props.navigation.getParam('todoDate');
-  console.log(" todoDate test : ",todoDate);
+  const isUpcomming = props.navigation.getParam('isUpcomming');
   const [count, setCount] = useState(0);
   const [value, setValue] = useState('');
   const [todos, setTodos] = useState([]);
@@ -126,10 +124,11 @@ export function Todo(props) {
 
     return new Promise(() => {
       db.transaction(tx => {
-        const squery = 'UPDATE `mytask` SET `completed_on`=?  WHERE `name`=? AND `created_on`=?;';
+        const squery =
+          'UPDATE `mytask` SET `completed_on`=?  WHERE `name`=? AND `created_on`=?;';
         tx.executeSql(
           squery,
-          [isChecked ? todoDate : 0, task_name,todoDate],
+          [isChecked ? todoDate : 0, task_name, todoDate],
           (tx, results) => {
             console.log('Results', results.rowsAffected);
             if (results.rowsAffected > 0) {
@@ -180,10 +179,8 @@ export function Todo(props) {
   };
   return (
     <View style={styles.container}>
-        <Text
-          style={styles.header}>
-          TASKS
-        </Text>
+      <Text style={styles.header}>TASKS</Text>
+      {isUpcomming ? <Text style={styles.upcomming}>{todoDate}</Text> : false}
       <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
@@ -224,7 +221,10 @@ export function Todo(props) {
                   key={item.key}
                   checked={item.checked}
                   setChecked={() =>
-                    completeTodo(item.text, (status = item.checked ? 0 : todoDate))
+                    completeTodo(
+                      item.text,
+                      (status = item.checked ? 0 : todoDate),
+                    )
                   }
                   deleteTodo={() => deleteTodo(item.text)}
                 />
@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   textInputContainer: {
+    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'baseline',
     borderColor: 'black',
@@ -297,5 +298,11 @@ const styles = StyleSheet.create({
   noTaskTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  upcomming: {
+    backgroundColor: 'green',
+    borderRadius: 20,
+    fontSize: 20,
+    color: 'white',
   },
 });

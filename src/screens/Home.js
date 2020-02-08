@@ -1,24 +1,32 @@
 //import liraries
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import DatePicker from 'react-native-modal-datetime-picker';
 import {Surface, FAB} from 'react-native-paper';
 // create a component
 export function HomeScreen(props) {
+
+    const [isVisible,setIsVisible] = useState(false);
 
     function test (){
         alert("Hi")
     }
 
-    function setTodoDate(getDay){
+        const setDate = (getDay) =>{
         //get the date in data/month/year format
         var date = new Date();
-        
         if(getDay === "Today"){
             var day = date.getDate();
         } else if (getDay === "Tomorrow"){
             var day = date.getDate()+1;
-        }else{
-            var day = 'will set';
+        } else{
+            //get the chosen date
+            var day = getDay.getDate();
+            var month = getDay.getMonth() + 1; // months from 1-12
+            var year = getDay.getFullYear();
+            const newdate = `${day}/${month}/${year}`;
+
+            props.navigation.navigate("Upcomming",{todoDate:newdate,isUpcomming:true});
         }
 
         //set the task todo date
@@ -28,11 +36,27 @@ export function HomeScreen(props) {
                     parseInt(date.getMonth() + 1) +
                     '/' +
                     date.getFullYear();
-
-        //redirect to 
-        console.log("testing =>".todoDate)
-        props.navigation.navigate(getDay,{todoDate:todoDate});        
+           
+        props.navigation.navigate(getDay,{todoDate:todoDate,isUpcomming:false});        
     }
+
+    const showDatePicker = () => setIsVisible(true);
+
+    const hideDatePicker = () => setIsVisible(false);
+
+    const handleDatePicked = date => {
+        
+
+        
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // months from 1-12
+        const year = date.getFullYear();
+        const newdate = `${day}/${month}/${year}`
+        `${year}-${month}-${day}`;
+        
+        alert(newdate);
+        hideDatePicker();
+    };
 
     return (
         <View style={styles.container}>
@@ -43,7 +67,7 @@ export function HomeScreen(props) {
             </Surface>
             <TouchableOpacity 
                 style={styles.surfaceContainer}
-                onPress={() => setTodoDate("Today")}>
+                onPress={() => setDate("Today")}>
                 <Surface style={styles.surface}>
                 <View style={styles.displayItem}>
                     <Text> Today </Text>
@@ -52,7 +76,7 @@ export function HomeScreen(props) {
             </TouchableOpacity>
             <TouchableOpacity 
                 style={styles.surfaceContainer}
-                onPress={() => setTodoDate("Tomorrow")}>
+                onPress={() => setDate("Tomorrow")}>
                 <Surface style={styles.surface}>
                 <View style={styles.displayItem}>
                     <Text> Tomorrow</Text>
@@ -66,11 +90,17 @@ export function HomeScreen(props) {
                 </View>
                 </Surface>
             </TouchableOpacity>
+            <DatePicker
+                mode="date"
+                isVisible={isVisible}
+                onConfirm={setDate}
+                onCancel={hideDatePicker}
+              />
             <FAB
                 style={styles.fab}
                 medium
                 icon="plus"
-                onPress={() => test()}
+                onPress={() => showDatePicker()}
             />
         </View>
     );  
