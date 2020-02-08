@@ -14,10 +14,16 @@ const AppNavigator = createStackNavigator(
         headerShown: false
       })
     },
-    TodoScreen: {
+    Today: {
       screen:Todo,
       navigationOptions:() => ({
         title:"Today"
+      })
+    },
+    Tomorrow: {
+      screen:Todo,
+      navigationOptions:() => ({
+        title:"Tomorrow"
       })
     },
   },

@@ -12,11 +12,14 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import TodoList from './TodoList';
 import {db} from './config/SqliteConnect';
-import {today, notaskMsg, startMsg, completedMsg} from './config/constVars';
+import {notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
-export function Todo() {
+export function Todo(props) {
 
+  
+  const todoDate = props.navigation.getParam('todoDate');
+  console.log(" todoDate test : ",todoDate);
   const [count, setCount] = useState(0);
   const [value, setValue] = useState('');
   const [todos, setTodos] = useState([]);
@@ -30,7 +33,7 @@ export function Todo() {
           'INSERT INTO `mytask` (`id`,`name`,`created_on`,`completed_on`) VALUES (?,?,?,?)';
         tx.executeSql(
           squery,
-          [Date.now(), value, today, 0],
+          [Date.now(), value, todoDate, 0],
           (tx, results) => {
             console.log('Results', results.rowsAffected);
             if (results.rowsAffected > 0) {
@@ -63,8 +66,8 @@ export function Todo() {
   function getAllTasks() {
     return new Promise(() => {
       db.transaction(tx => {
-        const squery = 'SELECT * FROM `mytask`;';
-        tx.executeSql(squery, [], (tx, results) => {
+        const squery = 'SELECT * FROM `mytask` WHERE `created_on`=?;';
+        tx.executeSql(squery, [todoDate], (tx, results) => {
           var len = results.rows.length;
           /**make todos array empty on each load*/
           setTodos([]);
@@ -123,10 +126,10 @@ export function Todo() {
 
     return new Promise(() => {
       db.transaction(tx => {
-        const squery = 'UPDATE `mytask` SET `completed_on`=?  WHERE `name`=?;';
+        const squery = 'UPDATE `mytask` SET `completed_on`=?  WHERE `name`=? AND `created_on`=?;';
         tx.executeSql(
           squery,
-          [isChecked ? today : 0, task_name],
+          [isChecked ? todoDate : 0, task_name,todoDate],
           (tx, results) => {
             console.log('Results', results.rowsAffected);
             if (results.rowsAffected > 0) {
@@ -179,13 +182,13 @@ export function Todo() {
     <View style={styles.container}>
         <Text
           style={styles.header}>
-          TODAY'S TASKS
+          TASKS
         </Text>
       <View style={styles.textInputContainer}>
         <TextInput
           style={styles.textInput}
           multiline={true}
-          placeholder="What do you want to do today?"
+          placeholder="What do you want to do?"
           placeholderTextColor="#abbabb"
           value={value}
           onChangeText={value => setValue(value)}
@@ -221,7 +224,7 @@ export function Todo() {
                   key={item.key}
                   checked={item.checked}
                   setChecked={() =>
-                    completeTodo(item.text, (status = item.checked ? 0 : today))
+                    completeTodo(item.text, (status = item.checked ? 0 : todoDate))
                   }
                   deleteTodo={() => deleteTodo(item.text)}
                 />

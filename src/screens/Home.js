@@ -9,6 +9,31 @@ export function HomeScreen(props) {
         alert("Hi")
     }
 
+    function setTodoDate(getDay){
+        //get the date in data/month/year format
+        var date = new Date();
+        
+        if(getDay === "Today"){
+            var day = date.getDate();
+        } else if (getDay === "Tomorrow"){
+            var day = date.getDate()+1;
+        }else{
+            var day = 'will set';
+        }
+
+        //set the task todo date
+        const todoDate =
+                    day +
+                    '/' +
+                    parseInt(date.getMonth() + 1) +
+                    '/' +
+                    date.getFullYear();
+
+        //redirect to 
+        console.log("testing =>".todoDate)
+        props.navigation.navigate(getDay,{todoDate:todoDate});        
+    }
+
     return (
         <View style={styles.container}>
             <Surface style={styles.pageInfoContainer}>
@@ -18,14 +43,16 @@ export function HomeScreen(props) {
             </Surface>
             <TouchableOpacity 
                 style={styles.surfaceContainer}
-                onPress={() => props.navigation.navigate("TodoScreen")}>
+                onPress={() => setTodoDate("Today")}>
                 <Surface style={styles.surface}>
                 <View style={styles.displayItem}>
                     <Text> Today </Text>
                 </View>
                 </Surface>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.surfaceContainer}>
+            <TouchableOpacity 
+                style={styles.surfaceContainer}
+                onPress={() => setTodoDate("Tomorrow")}>
                 <Surface style={styles.surface}>
                 <View style={styles.displayItem}>
                     <Text> Tomorrow</Text>
