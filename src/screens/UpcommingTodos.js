@@ -1,8 +1,10 @@
 //import liraries
 import React, {Component, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import { List,ListItem } from 'react-native-elements'
+import {View,Text,StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import { ListItem } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Feather';
 import {db} from './config/SqliteConnect';
+import {notaskMsg} from './config/constVars';
 
 // create a component
 export function showUpcommingTodos(props) {
@@ -30,7 +32,7 @@ export function showUpcommingTodos(props) {
   function getAllUpcommingTasks() {
     return new Promise(() => {
       db.transaction(tx => {
-        const squery = 'SELECT * FROM `upcomming`';
+        const squery = 'SELECT DISTINCT `created_on` FROM `upcomming`';
         tx.executeSql(squery, [], (tx, results) => {
           var len = results.rows.length;
           console.log('length of upcomming', len);
@@ -48,7 +50,31 @@ export function showUpcommingTodos(props) {
       });
     });
   }
+
+  const deleteUpcomming = (date) => {
+    return new Promise(() => {
+      db.transaction(tx =>{
+        const squery='DELETE FROM `upcomming` WHERE `created_on`=?';
+        tx.executeSql(squery,[date],(tx,results)=>{
+          if(results.rowsAffected > 0 ){
+            setUpcomming(upcomming.filter(upcomming => upcomming !== date));
+
+              /**Reload all tasks */
+              getAllUpcommingTasks();
+            console.log("Deleted successfully");
+          } else {
+            console.log("failed");
+          }
+        },
+        error => {
+          console.log("failed because",error);
+        }
+        )
+      })
+    })
+  }
   return (
+    upcomming.length > 0 ?
       <FlatList
         data={upcomming}
         renderItem={({ item,index }) => (
@@ -57,11 +83,18 @@ export function showUpcommingTodos(props) {
               key={index}
               title={item}
               subtitle={getDayOfWeek(item)}
+              leftIcon={<Icon name="trash-2" size={30} color="red" style={{marginLeft: 15}}  onPress={() => deleteUpcomming(item)} />}
+              rightIcon={<Icon name="chevron-right" size={30} color="gray" style={{marginLeft: 15}} />}
               bottomDivider
             />
           </TouchableOpacity>
         )}
       />
+      : (
+        <View style={styles.noTask}>
+          <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
+        </View>
+      )
   );
 }
 
@@ -70,7 +103,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
+  },
+  noTask: {
+    marginTop: '50%',
     alignItems: 'center',
-    backgroundColor: '#2c3e50',
   },
 });

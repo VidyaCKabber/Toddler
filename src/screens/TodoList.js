@@ -6,10 +6,6 @@ import Icon from 'react-native-vector-icons/Feather';
 // create a component
 export default function TodoList(props) {
 
-  if(props.checked){
-    const listbackcolor='green';
-  }
-
   return (
     <View style={styles.listContainer}>
       <Icon
