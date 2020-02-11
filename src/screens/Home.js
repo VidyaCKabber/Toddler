@@ -3,14 +3,12 @@ import React, {Component, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import DatePicker from 'react-native-modal-datetime-picker';
 import {Surface, FAB} from 'react-native-paper';
+import {db} from './config/SqliteConnect';
+
 // create a component
 export function HomeScreen(props) {
 
     const [isVisible,setIsVisible] = useState(false);
-
-    function test (){
-        alert("Hi")
-    }
 
         const setDate = (getDay) =>{
         //get the date in data/month/year format
@@ -19,44 +17,62 @@ export function HomeScreen(props) {
             var day = date.getDate();
         } else if (getDay === "Tomorrow"){
             var day = date.getDate()+1;
-        } else{
-            //get the chosen date
-            var day = getDay.getDate();
-            var month = getDay.getMonth() + 1; // months from 1-12
-            var year = getDay.getFullYear();
-            const newdate = `${day}/${month}/${year}`;
-
-            props.navigation.navigate("Upcomming",{todoDate:newdate,isUpcomming:true});
+        } else if (getDay === "showUpcomming"){
+            props.navigation.navigate(getDay);
+        }
+        else{
+            //store upcomming task date
+            saveUpcommingTasks(getDay);
         }
 
         //set the task todo date
         const todoDate =
-                    day +
-                    '/' +
-                    parseInt(date.getMonth() + 1) +
-                    '/' +
-                    date.getFullYear();
+                    date.getFullYear()+'-'+
+                    ("0" + (date.getMonth() + 1)).slice(-2) +'-'+
+                    ("0" + (day)).slice(-2);
+                    
            
         props.navigation.navigate(getDay,{todoDate:todoDate,isUpcomming:false});        
+    }
+
+
+    const saveUpcommingTasks = (getDay) => {
+         //get the chosen date
+         var day = ("0" + (getDay.getDate())).slice(-2)// months from 1-12
+         var month =("0" + (getDay.getMonth() + 1)).slice(-2);
+
+         var year = getDay.getFullYear();
+         const newdate = `${year}-${month}-${day}`;
+
+         console.log("newdate",newdate)
+         //store upcomming task date
+         return new Promise(() => {
+             db.transaction(tx => {
+                 console.log("newdate",newdate)
+               const squery = 'INSERT INTO `upcomming`(`id`,`created_on`) VALUES(?,?)';
+               tx.executeSql(
+                 squery,
+                 [Date.now(), newdate],
+                 (tx, results) => {
+                   console.log('result rowAffected', results.rowsAffected);
+                   if (results.rowsAffected > 0) {
+                     console.log('Created successfully!');
+                     props.navigation.navigate("Upcomming",{todoDate:newdate,isUpcomming:true});
+                   } else {
+                     console.log('failed!');
+                   }
+                 },
+                 error => {
+                   console.log('failed because', error);
+                 },
+               );
+             });
+           });
     }
 
     const showDatePicker = () => setIsVisible(true);
 
     const hideDatePicker = () => setIsVisible(false);
-
-    const handleDatePicked = date => {
-        
-
-        
-        const day = date.getDate();
-        const month = date.getMonth() + 1; // months from 1-12
-        const year = date.getFullYear();
-        const newdate = `${day}/${month}/${year}`
-        `${year}-${month}-${day}`;
-        
-        alert(newdate);
-        hideDatePicker();
-    };
 
     return (
         <View style={styles.container}>
@@ -83,7 +99,9 @@ export function HomeScreen(props) {
                 </View>
                 </Surface>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.surfaceContainer}>
+            <TouchableOpacity 
+                style={styles.surfaceContainer}
+                onPress={() =>  setDate("showUpcomming")}>
                 <Surface style={styles.surface}>
                 <View style={styles.displayItem}>
                     <Text> Upcomming </Text>
