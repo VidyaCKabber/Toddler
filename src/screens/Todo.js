@@ -24,9 +24,7 @@ export function Todo(props) {
   const [percent, setPercent] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(" isUpcomming => ",isUpcomming);
-  
-  
+  console.log(' isUpcomming => ', isUpcomming);
 
   const createTodo = () => {
     return new Promise(() => {

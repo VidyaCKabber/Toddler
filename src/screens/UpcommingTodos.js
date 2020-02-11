@@ -1,7 +1,7 @@
 //import liraries
 import React, {Component, useEffect, useState} from 'react';
-import {View,Text,StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import { ListItem } from 'react-native-elements';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 import {db} from './config/SqliteConnect';
 import {notaskMsg} from './config/constVars';
@@ -22,7 +22,7 @@ export function showUpcommingTodos(props) {
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday'
+      'Saturday',
     ];
     const d = new Date(date);
     const dayName = gsDayNames[d.getDay()];
@@ -42,7 +42,7 @@ export function showUpcommingTodos(props) {
               //console.log("upcomming.date => ",results.rows.item(i).created_on);
               setUpcomming(upcomming => [
                 ...upcomming,
-              results.rows.item(i).created_on,
+                results.rows.item(i).created_on,
               ]);
             }
           }
@@ -51,50 +51,72 @@ export function showUpcommingTodos(props) {
     });
   }
 
-  const deleteUpcomming = (date) => {
+  const deleteUpcomming = date => {
     return new Promise(() => {
-      db.transaction(tx =>{
-        const squery='DELETE FROM `upcomming` WHERE `created_on`=?';
-        tx.executeSql(squery,[date],(tx,results)=>{
-          if(results.rowsAffected > 0 ){
-            setUpcomming(upcomming.filter(upcomming => upcomming !== date));
+      db.transaction(tx => {
+        const squery = 'DELETE FROM `upcomming` WHERE `created_on`=?';
+        tx.executeSql(
+          squery,
+          [date],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+              setUpcomming(upcomming.filter(upcomming => upcomming !== date));
 
               /**Reload all tasks */
               getAllUpcommingTasks();
-            console.log("Deleted successfully");
-          } else {
-            console.log("failed");
-          }
-        },
-        error => {
-          console.log("failed because",error);
-        }
-        )
-      })
-    })
-  }
-  return (
-    upcomming.length > 0 ?
-      <FlatList
-        data={upcomming}
-        renderItem={({ item,index }) => (
-          <TouchableOpacity onPress={() => props.navigation.navigate("Upcomming",{todoDate:item,isUpcomming:true})}>
-            <ListItem
-              key={index}
-              title={item}
-              subtitle={getDayOfWeek(item)}
-              leftIcon={<Icon name="trash-2" size={30} color="red" style={{marginLeft: 15}}  onPress={() => deleteUpcomming(item)} />}
-              rightIcon={<Icon name="chevron-right" size={30} color="gray" style={{marginLeft: 15}} />}
-              bottomDivider
-            />
-          </TouchableOpacity>
-        )}
-      />
-      : (
-        <View style={styles.noTask}>
-          <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
-        </View>
-      )
+              console.log('Deleted successfully');
+            } else {
+              console.log('failed');
+            }
+          },
+          error => {
+            console.log('failed because', error);
+          },
+        );
+      });
+    });
+  };
+  return upcomming.length > 0 ? (
+    <FlatList
+      data={upcomming}
+      renderItem={({item, index}) => (
+        <TouchableOpacity
+          onPress={() =>
+            props.navigation.navigate('Upcomming', {
+              todoDate: item,
+              isUpcomming: true,
+            })
+          }>
+          <ListItem
+            key={index}
+            title={item}
+            subtitle={getDayOfWeek(item)}
+            leftIcon={
+              <Icon
+                name="trash-2"
+                size={30}
+                color="red"
+                style={{marginLeft: 15}}
+                onPress={() => deleteUpcomming(item)}
+              />
+            }
+            rightIcon={
+              <Icon
+                name="chevron-right"
+                size={30}
+                color="gray"
+                style={{marginLeft: 15}}
+              />
+            }
+            bottomDivider
+          />
+        </TouchableOpacity>
+      )}
+    />
+  ) : (
+    <View style={styles.noTask}>
+      <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
+    </View>
   );
 }
 
@@ -103,7 +125,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   noTask: {
     marginTop: '50%',

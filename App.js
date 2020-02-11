@@ -33,12 +33,12 @@ const AppNavigator = createStackNavigator(
         title: 'Upcomming',
       }),
     },
-    showUpcomming : {
-      screen:showUpcommingTodos,
-      navigationOptions : () => ({
+    showUpcomming: {
+      screen: showUpcommingTodos,
+      navigationOptions: () => ({
         title: 'All Upcomming Todos',
-      })
-    }
+      }),
+    },
   },
   {initialRouteName: 'HomeScreen'},
 );
@@ -47,6 +47,8 @@ const AppContainer = createAppContainer(AppNavigator);
 
 // create a component
 export default function App() {
+
+  console.disableYellowBox = true;
   return (
     <View style={{flex: 1}}>
       <AppContainer />
