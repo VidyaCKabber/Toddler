@@ -92,18 +92,16 @@ export function HomeScreen(props) {
       const hrs = new Date().getHours();
       var greet;
 
-      if (hrs < 12) greet = 'Good Morning..';
-      else if (hrs >= 12 && hrs < 17) greet = 'Good Afternoon..';
-      else if (hrs >= 17 && hrs <= 21) greet = 'Good Evening..';
-      else greet = 'Good Night..';
+      if (hrs < 12) greet = 'Good Morning🌞..';
+      else if (hrs >= 12 && hrs < 17) greet = 'Good Afternoon😎..';
+      else if (hrs >= 17 && hrs <= 21) greet = 'Good Evening☕..';
+      else greet = 'Good Night😴..';
 
       setGreeting(greet); /**set the state variable */
     }, 5000);
 
-    if(greeting != ''){
-      setIsloading(false);
-    }
-    
+      setIsloading(false)
+
   });
   return isloading ? (
     <View style={{flex: 1, paddingTop: 20, marginTop:'50%'}}>
@@ -116,7 +114,7 @@ export function HomeScreen(props) {
           <Text style={{fontSize:20,fontWeight: 'bold',color: '#2b3595'}}>{greeting}</Text>
         </View>
         <View style={styles.quote}>
-          <Text style={{fontSize:17,fontWeight: 'bold',color: '#2b3595'}}>" {quote} "</Text>
+          <Text style={{fontSize:17,fontWeight: 'bold',color: '#2b3595',fontFamily:'sans-serif'}}>{quote}</Text>
         </View>
       </Surface>
 

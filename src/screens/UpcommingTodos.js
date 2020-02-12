@@ -63,9 +63,6 @@ export function showUpcommingTodos(props) {
           (tx, results) => {
             if (results.rowsAffected > 0) {
               setUpcomming(upcomming.filter(upcomming => upcomming !== date));
-
-              /**Reload all tasks */
-              getAllUpcommingTasks();
               console.log('Deleted successfully');
             } else {
               console.log('failed');
@@ -86,6 +83,7 @@ export function showUpcommingTodos(props) {
   upcomming.length > 0 ? (
     <FlatList
       data={upcomming}
+      extraData={upcomming}
       renderItem={({item, index}) => (
         <TouchableOpacity
           onPress={() =>
