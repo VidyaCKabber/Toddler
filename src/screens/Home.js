@@ -1,15 +1,22 @@
 //import liraries
 import React, {Component, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import DatePicker from 'react-native-modal-datetime-picker';
-import {Surface, FAB} from 'react-native-paper';
+import {Surface, FAB, withTheme} from 'react-native-paper';
 import {db} from './config/SqliteConnect';
-import {quote} from './config/constVars';
+import {quote,appColor} from './config/constVars';
 
 // create a component
 export function HomeScreen(props) {
   const [isVisible, setIsVisible] = useState(false);
   const [greeting, setGreeting] = useState('');
+  const [isloading, setIsloading] = useState(false);
 
   const setDate = getDay => {
     //get the date in data/month/year format
@@ -85,33 +92,42 @@ export function HomeScreen(props) {
       const hrs = new Date().getHours();
       var greet;
 
-      if (hrs < 12) greet = 'Good Morning';
-      else if (hrs >= 12 && hrs < 17) greet = 'Good Afternoon';
-      else if (hrs >= 17 && hrs < 24) greet = 'Good Evening';
-      else greet = 'Good Night';
+      if (hrs < 12) greet = 'Good Morning..';
+      else if (hrs >= 12 && hrs < 17) greet = 'Good Afternoon..';
+      else if (hrs >= 17 && hrs <= 21) greet = 'Good Evening..';
+      else greet = 'Good Night..';
 
       setGreeting(greet); /**set the state variable */
     }, 5000);
+
+    if(greeting != ''){
+      setIsloading(false);
+    }
+    
   });
-  return (
+  return isloading ? (
+    <View style={{flex: 1, paddingTop: 20, marginTop:'50%'}}>
+      <ActivityIndicator />
+    </View>
+  ) : (
     <View style={styles.container}>
       <Surface style={styles.pageInfoContainer}>
         <View style={styles.greetMsg}>
-          <Text>{greeting}</Text>
+          <Text style={{fontSize:20,fontWeight: 'bold',color: '#2b3595'}}>{greeting}</Text>
         </View>
         <View style={styles.quote}>
-          <Text>{quote}</Text>
+          <Text style={{fontSize:17,fontWeight: 'bold',color: '#2b3595'}}>" {quote} "</Text>
         </View>
       </Surface>
 
       <TouchableOpacity
         style={styles.surfaceContainer}
         onPress={() => setDate('Today')}>
-          <Surface style={styles.surface}>
-            <View>
-              <Text> TODAY </Text>
-            </View>
-          </Surface>
+        <Surface style={styles.surface}>
+          <View>
+            <Text> TODAY </Text>
+          </View>
+        </Surface>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -134,7 +150,6 @@ export function HomeScreen(props) {
       </TouchableOpacity>
       <DatePicker
         mode="date"
-        color={'red'}
         minimumDate={new Date()}
         isVisible={isVisible}
         onConfirm={setDate}
@@ -163,11 +178,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   pageInfoContainer: {
-    marginTop: 15,
-    marginBottom: 15,
-    padding: 8,
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 5,
     elevation: 8,
-    backgroundColor:'#f85e9f'
+    backgroundColor: '#fcf9ea',
   },
   surface: {
     padding: 8,
@@ -178,7 +193,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 8,
-    backgroundColor: '#a7e9af',
+    backgroundColor: appColor,
   },
   fab: {
     marginTop: 50,
@@ -188,17 +203,16 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: '#27496d',
+    backgroundColor: '#0278ae',
   },
   quote: {
-    marginTop: 5,
     marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 15,
   },
   greetMsg: {
-    marginTop: 10,
+    marginTop: 5,
     padding: 2,
   },
 });

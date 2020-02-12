@@ -1,6 +1,6 @@
 //import liraries
 import React, {Component, useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Feather';
 import {db} from './config/SqliteConnect';
@@ -9,6 +9,7 @@ import {notaskMsg} from './config/constVars';
 // create a component
 export function showUpcommingTodos(props) {
   const [upcomming, setUpcomming] = useState([]);
+  const [isloading,setIsloading] = useState(true);
   /** get all created tasks*/
   useEffect(() => {
     getAllUpcommingTasks();
@@ -46,6 +47,7 @@ export function showUpcommingTodos(props) {
               ]);
             }
           }
+          setIsloading(false);
         });
       });
     });
@@ -76,7 +78,12 @@ export function showUpcommingTodos(props) {
       });
     });
   };
-  return upcomming.length > 0 ? (
+  return isloading ?
+    <View style={{flex: 1, paddingTop: 20, marginTop:'50%'}}>
+      <ActivityIndicator />
+    </View>
+  :
+  upcomming.length > 0 ? (
     <FlatList
       data={upcomming}
       renderItem={({item, index}) => (
@@ -130,5 +137,9 @@ const styles = StyleSheet.create({
   noTask: {
     marginTop: '50%',
     alignItems: 'center',
+  },
+  noTaskTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

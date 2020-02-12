@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import TodoList from './TodoList';
 import {db} from './config/SqliteConnect';
-import {notaskMsg, startMsg, completedMsg} from './config/constVars';
+import {appColor,notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
 export function Todo(props) {
@@ -27,33 +27,37 @@ export function Todo(props) {
   console.log(' isUpcomming => ', isUpcomming);
 
   const createTodo = () => {
-    return new Promise(() => {
-      db.transaction(tx => {
-        const squery =
-          'INSERT INTO `mytask` (`id`,`name`,`created_on`,`completed_on`) VALUES (?,?,?,?)';
-        tx.executeSql(
-          squery,
-          [Date.now(), value, todoDate, 0],
-          (tx, results) => {
-            console.log('Results', results.rowsAffected);
-            if (results.rowsAffected > 0) {
-              setValue('');
-              setTodos(todos => [
-                ...todos,
-                {text: value, key: Date.now(), checked: false},
-              ]);
-              console.log('Created successfully!');
-              setIsLoading(false);
-            } else {
-              console.log('failed!');
-            }
-          },
-          error => {
-            console.log('failed!', error);
-          },
-        );
+    if(value != ''){
+      return new Promise(() => {
+        db.transaction(tx => {
+          const squery =
+            'INSERT INTO `mytask` (`id`,`name`,`created_on`,`completed_on`) VALUES (?,?,?,?)';
+          tx.executeSql(
+            squery,
+            [Date.now(), value, todoDate, 0],
+            (tx, results) => {
+              console.log('Results', results.rowsAffected);
+              if (results.rowsAffected > 0) {
+                setValue('');
+                setTodos(todos => [
+                  ...todos,
+                  {text: value, key: Date.now(), checked: false},
+                ]);
+                console.log('Created successfully!');
+                setIsLoading(false);
+              } else {
+                console.log('failed!');
+              }
+            },
+            error => {
+              console.log('failed!', error);
+            },
+          );
+        });
       });
-    });
+    } else {
+      alert("Field cannot empty!!")
+    }
   };
 
   //get completed task count, incrementing and decrementing both handled in the same function
@@ -193,7 +197,7 @@ export function Todo(props) {
           onChangeText={value => setValue(value)}
         />
         <TouchableOpacity onPress={() => createTodo()}>
-          <Icon name="plus" size={30} color="blue" style={{marginLeft: 15}} />
+          <Icon name="plus" size={30} color="#2b3595"  style={{marginLeft: 15}} />
         </TouchableOpacity>
       </View>
 
@@ -273,7 +277,7 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 20,
     fontSize: 25,
-    color: 'blue',
+    color: '#2b3595',
     fontWeight: 'bold',
     paddingBottom: 20,
   },
@@ -302,9 +306,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   upcomming: {
-    backgroundColor: 'green',
+    backgroundColor: appColor,
     borderRadius: 20,
     fontSize: 20,
-    color: 'white',
   },
 });
