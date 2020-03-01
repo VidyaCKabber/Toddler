@@ -1,15 +1,7 @@
 //import liraries
 import React, {Component, useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {ListItem} from 'react-native-elements';
-import {FAB} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 import {db} from './config/SqliteConnect';
 import {notaskMsg} from './config/constVars';
@@ -17,17 +9,11 @@ import {notaskMsg} from './config/constVars';
 // create a component
 export function showUpcommingTodos(props) {
   const [upcomming, setUpcomming] = useState([]);
-  const [isloading, setIsloading] = useState(true);
+  const [isloading,setIsloading] = useState(true);
   /** get all created tasks*/
   useEffect(() => {
     getAllUpcommingTasks();
   }, [db]);
-
-
-  const showDatePicker = () => setIsVisible(true);
-
-  const hideDatePicker = () => setIsVisible(false);
-  
 
   function getDayOfWeek(date) {
     const gsDayNames = [
@@ -89,57 +75,52 @@ export function showUpcommingTodos(props) {
       });
     });
   };
-  return isloading ? (
-    <View style={{flex: 1, paddingTop: 20, marginTop: '50%'}}>
+  return isloading ?
+    <View style={{flex: 1, paddingTop: 20, marginTop:'50%'}}>
       <ActivityIndicator />
     </View>
-  ) : upcomming.length > 0 ? (
-    <View style={{flex: 1}}>
-      <FlatList
-        data={upcomming}
-        extraData={upcomming}
-        renderItem={({item, index}) => (
-          <TouchableOpacity
-            onPress={() =>
-              props.navigation.navigate('Upcomming', {
-                todoDate: item,
-                isUpcomming: true,
-              })
-            }>
-            <ListItem
-              key={index}
-              title={item}
-              subtitle={getDayOfWeek(item)}
-              leftIcon={
-                <Icon
-                  name="trash-2"
-                  size={30}
-                  color="red"
-                  style={{marginLeft: 15}}
-                  onPress={() => deleteUpcomming(item)}
-                />
-              }
-              rightIcon={
-                <Icon
-                  name="chevron-right"
-                  size={30}
-                  color="gray"
-                  style={{marginLeft: 15}}
-                />
-              }
-              bottomDivider
-            />
-          </TouchableOpacity>
-        )}
-      />
-      <FAB style={styles.fab} icon="plus" />
-    </View>
+  :
+  upcomming.length > 0 ? (
+    <FlatList
+      data={upcomming}
+      extraData={upcomming}
+      renderItem={({item, index}) => (
+        <TouchableOpacity
+          onPress={() =>
+            props.navigation.navigate('Upcomming', {
+              todoDate: item,
+              isUpcomming: true,
+            })
+          }>
+          <ListItem
+            key={index}
+            title={item}
+            subtitle={getDayOfWeek(item)}
+            leftIcon={
+              <Icon
+                name="trash-2"
+                size={30}
+                color="red"
+                style={{marginLeft: 15}}
+                onPress={() => deleteUpcomming(item)}
+              />
+            }
+            rightIcon={
+              <Icon
+                name="chevron-right"
+                size={30}
+                color="gray"
+                style={{marginLeft: 15}}
+              />
+            }
+            bottomDivider
+          />
+        </TouchableOpacity>
+      )}
+    />
   ) : (
-    <View style={{flex: 1}}>
-      <View style={styles.noTask}>
-        <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
-      </View>
-      <FAB style={styles.fab} icon="plus" />
+    <View style={styles.noTask}>
+      <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
     </View>
   );
 }
@@ -158,12 +139,5 @@ const styles = StyleSheet.create({
   noTaskTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#0278ae',
   },
 });
