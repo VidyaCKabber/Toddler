@@ -3,4 +3,4 @@ export const quote = "There are only two rules for being SUCCESSFUL. Figure out 
 export const notaskMsg   = 'No task planned yet';
 export const  startMsg    = 'Start working on your tasks';
 export const  completedMsg = 'Congratulation, you met your mile stone!!!. Good going, keep it up';
-export const appColor = '#a7e9af';
+export const appColor = '#0278ae';

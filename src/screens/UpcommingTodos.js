@@ -13,6 +13,7 @@ import {FAB} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 import {db} from './config/SqliteConnect';
 import {notaskMsg} from './config/constVars';
+import {SelectDate} from '../screens/SelectDate';
 
 // create a component
 export function showUpcommingTodos(props) {
@@ -22,11 +23,6 @@ export function showUpcommingTodos(props) {
   useEffect(() => {
     getAllUpcommingTasks();
   }, [db]);
-
-
-  const showDatePicker = () => setIsVisible(true);
-
-  const hideDatePicker = () => setIsVisible(false);
   
 
   function getDayOfWeek(date) {
@@ -132,14 +128,14 @@ export function showUpcommingTodos(props) {
           </TouchableOpacity>
         )}
       />
-      <FAB style={styles.fab} icon="plus" />
+     <SelectDate/>
     </View>
   ) : (
     <View style={{flex: 1}}>
       <View style={styles.noTask}>
         <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
       </View>
-      <FAB style={styles.fab} icon="plus" />
+      <SelectDate/>
     </View>
   );
 }

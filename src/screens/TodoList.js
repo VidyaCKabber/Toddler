@@ -8,14 +8,13 @@ export default function TodoList(props) {
   return (
     <View style={styles.listContainer}>
       <Icon
-        name="square"
+        name={props.checked?"check-square":"square"}
         size={30}
         color={props.checked ? 'green' : 'black'}
         style={{marginLeft: 15}}
         onPress={props.setChecked}
       />
       <View style={styles.taskContainer}>
-        {props.checked && <View style={styles.verticalLine} />}
         <Text style={styles.listItem}>{props.text}</Text>
       </View>
       {/** disable the delete icon when the task is completed */}
@@ -48,15 +47,6 @@ const styles = StyleSheet.create({
     borderColor: 'green',
     borderBottomWidth: 1,
     fontSize: 17,
-  },
-  verticalLine: {
-    borderBottomColor: 'green',
-    borderBottomWidth: 4,
-    marginLeft: 10,
-    width: '100%',
-    position: 'absolute',
-    marginTop: 10,
-    fontWeight: 'bold',
   },
   deleteIcon: {
     marginLeft: 'auto',

@@ -1,6 +1,6 @@
 //import liraries
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import DatePicker from 'react-native-modal-datetime-picker';
 import {FAB} from 'react-native-paper';
 import {db} from './config/SqliteConnect';
@@ -8,6 +8,7 @@ import {db} from './config/SqliteConnect';
 // create a component
 export function SelectDate(props) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   const saveUpcommingTasks = getDay => {
     //get the chosen date
@@ -29,7 +30,13 @@ export function SelectDate(props) {
             console.log('result rowAffected', results.rowsAffected);
             if (results.rowsAffected > 0) {
               console.log('Created successfully!');
-              hideDatePicker();
+              setIsloading(true);
+
+              setTimeout(() => {
+                setIsloading(false);
+              }, 5000);
+              setIsVisible(false);
+
               props.navigation.navigate('Upcomming', {
                 todoDate: newdate,
                 isUpcomming: true,
@@ -50,7 +57,11 @@ export function SelectDate(props) {
 
   const hideDatePicker = () => setIsVisible(false);
 
-  return (
+  return isLoading ? (
+    <View style={{flex: 1, paddingTop: 20, marginTop: '50%'}}>
+      <ActivityIndicator />
+    </View>
+  ) : (
     <View style={{flex: 1}}>
       <DatePicker
         mode="date"

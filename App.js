@@ -13,8 +13,10 @@ const theme = {
   roundness: 2,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#a7e9af',
+    primary: '#0278ae',
     accent: '#2b3595',
+    //#a7e9af
+    //#2b3595
   },
 };
 
@@ -30,6 +32,7 @@ const AppNavigator = createStackNavigator(
       screen: Todo,
       navigationOptions: () => ({
         title: 'Today',
+        headerTintColor:'white',
         headerStyle: {
           backgroundColor: theme.colors.primary,
         }
@@ -39,6 +42,7 @@ const AppNavigator = createStackNavigator(
       screen: Todo,
       navigationOptions: () => ({
         title: 'Tomorrow',
+        headerTintColor:'white',
         headerStyle: {
           backgroundColor: theme.colors.primary,
         }
@@ -47,6 +51,7 @@ const AppNavigator = createStackNavigator(
     Upcomming: {
       screen: Todo,
       navigationOptions: () => ({
+        headerTintColor:'white',
         title: 'Upcomming',
         headerStyle: {
           backgroundColor: theme.colors.primary,
@@ -57,11 +62,12 @@ const AppNavigator = createStackNavigator(
       screen: showUpcommingTodos,
       navigationOptions: () => ({
         title: 'All Upcomming Todos',
+        headerTintColor:'white',
         headerStyle: {
           backgroundColor: theme.colors.primary,
         }
       }),
-    },
+    }
   },
   {initialRouteName: 'HomeScreen'},
 );

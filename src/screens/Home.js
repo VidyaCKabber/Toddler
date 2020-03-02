@@ -11,6 +11,7 @@ import DatePicker from 'react-native-modal-datetime-picker';
 import {Surface, FAB, withTheme} from 'react-native-paper';
 import {db} from './config/SqliteConnect';
 import {quote,appColor} from './config/constVars';
+import {SelectDate} from '../screens/SelectDate';
 
 // create a component
 export function HomeScreen(props) {
@@ -27,11 +28,7 @@ export function HomeScreen(props) {
       var day = date.getDate() + 1;
     } else if (getDay === 'showUpcomming') {
       props.navigation.navigate(getDay);
-    } else {
-      //store upcomming task date
-      saveUpcommingTasks(getDay);
-    }
-
+    } 
     //set the task todo date
     const todoDate =
       date.getFullYear() +
@@ -40,51 +37,11 @@ export function HomeScreen(props) {
       '-' +
       ('0' + day).slice(-2);
 
-    hideDatePicker();
     //navigate to todo page
     props.navigation.navigate(getDay, {todoDate: todoDate, isUpcomming: false});
   };
 
-  const saveUpcommingTasks = getDay => {
-    //get the chosen date
-    var day = ('0' + getDay.getDate()).slice(-2); // months from 1-12
-    var month = ('0' + (getDay.getMonth() + 1)).slice(-2);
-
-    var year = getDay.getFullYear();
-    const newdate = `${year}-${month}-${day}`;
-
-    //store upcomming task date
-    return new Promise(() => {
-      db.transaction(tx => {
-        console.log('newdate', newdate);
-        const squery = 'INSERT INTO `upcomming`(`id`,`created_on`) VALUES(?,?)';
-        tx.executeSql(
-          squery,
-          [Date.now(), newdate],
-          (tx, results) => {
-            console.log('result rowAffected', results.rowsAffected);
-            if (results.rowsAffected > 0) {
-              console.log('Created successfully!');
-              hideDatePicker();
-              props.navigation.navigate('Upcomming', {
-                todoDate: newdate,
-                isUpcomming: true,
-              });
-            } else {
-              console.log('failed!');
-            }
-          },
-          error => {
-            console.log('failed because', error);
-          },
-        );
-      });
-    });
-  };
-
-  const showDatePicker = () => setIsVisible(true);
-
-  const hideDatePicker = () => setIsVisible(false);
+ 
 
   useEffect(() => {
     //set intervals for 1 minute
@@ -123,7 +80,7 @@ export function HomeScreen(props) {
         onPress={() => setDate('Today')}>
         <Surface style={styles.surface}>
           <View>
-            <Text> TODAY </Text>
+            <Text style={styles.day}> TODAY </Text>
           </View>
         </Surface>
       </TouchableOpacity>
@@ -133,7 +90,7 @@ export function HomeScreen(props) {
         onPress={() => setDate('Tomorrow')}>
         <Surface style={styles.surface}>
           <View>
-            <Text> TOMORROW</Text>
+            <Text style={styles.day}> TOMORROW</Text>
           </View>
         </Surface>
       </TouchableOpacity>
@@ -142,18 +99,11 @@ export function HomeScreen(props) {
         onPress={() => setDate('showUpcomming')}>
         <Surface style={styles.surface}>
           <View>
-            <Text> UPCOMMING </Text>
+            <Text style={styles.day}> UPCOMMING </Text>
           </View>
         </Surface>
       </TouchableOpacity>
-      <DatePicker
-        mode="date"
-        minimumDate={new Date()}
-        isVisible={isVisible}
-        onConfirm={setDate}
-        onCancel={hideDatePicker}
-      />
-      <FAB style={styles.fab} icon="plus" onPress={() => showDatePicker()} />
+      <SelectDate navigation={props.navigation}/>
     </View>
   );
 }
@@ -213,4 +163,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     padding: 2,
   },
+  day:{
+    color:'white'
+  }
 });

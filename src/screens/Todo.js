@@ -197,7 +197,7 @@ export function Todo(props) {
           onChangeText={value => setValue(value)}
         />
         <TouchableOpacity onPress={() => createTodo()}>
-          <Icon name="plus" size={30} color="#2b3595"  style={{marginLeft: 15}} />
+          <Icon name="plus" size={30} color={appColor}  style={{marginLeft: 15}} />
         </TouchableOpacity>
       </View>
 
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingLeft: 20,
     flexDirection: 'row',
-    borderColor: 'blue',
+    borderColor: appColor,
     borderBottomWidth: 3,
     width: '100%',
     alignItems: 'stretch',
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 20,
     fontSize: 25,
-    color: '#2b3595',
+    color: appColor,
     fontWeight: 'bold',
     paddingBottom: 20,
   },
