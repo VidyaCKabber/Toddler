@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import TodoList from './TodoList';
 import {db} from './config/SqliteConnect';
-import {appColor,notaskMsg, startMsg, completedMsg} from './config/constVars';
+import {appColor, notaskMsg, startMsg, completedMsg} from './config/constVars';
 
 // create a component
 export function Todo(props) {
@@ -27,7 +27,7 @@ export function Todo(props) {
   console.log(' isUpcomming => ', isUpcomming);
 
   const createTodo = () => {
-    if(value != ''){
+    if (value != '') {
       return new Promise(() => {
         db.transaction(tx => {
           const squery =
@@ -56,7 +56,7 @@ export function Todo(props) {
         });
       });
     } else {
-      alert("Field cannot empty!!")
+      alert('Field cannot empty!!');
     }
   };
 
@@ -197,7 +197,12 @@ export function Todo(props) {
           onChangeText={value => setValue(value)}
         />
         <TouchableOpacity onPress={() => createTodo()}>
-          <Icon name="plus" size={30} color={appColor}  style={{marginLeft: 15}} />
+          <Icon
+            name="plus"
+            size={30}
+            color={appColor}
+            style={{marginLeft: 15}}
+          />
         </TouchableOpacity>
       </View>
 

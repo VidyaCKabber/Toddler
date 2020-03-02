@@ -9,21 +9,26 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
-import {FAB} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
 import {db} from './config/SqliteConnect';
-import {notaskMsg} from './config/constVars';
+import {appColor,notaskMsg} from './config/constVars';
 import {SelectDate} from '../screens/SelectDate';
 
 // create a component
 export function showUpcommingTodos(props) {
   const [upcomming, setUpcomming] = useState([]);
   const [isloading, setIsloading] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
+
   /** get all created tasks*/
   useEffect(() => {
     getAllUpcommingTasks();
   }, [db]);
-  
+
+  function onRefresh() {
+    setIsFetching(true);
+    getAllUpcommingTasks();
+  }
 
   function getDayOfWeek(date) {
     const gsDayNames = [
@@ -49,6 +54,8 @@ export function showUpcommingTodos(props) {
           console.log('length of upcomming', len);
           /**make todos array empty on each load*/
           if (len > 0) {
+            //make array as empty to on every refresh
+            setUpcomming([]);
             for (let i = 0; i < len; i++) {
               //console.log("upcomming.date => ",results.rows.item(i).created_on);
               setUpcomming(upcomming => [
@@ -56,6 +63,7 @@ export function showUpcommingTodos(props) {
                 results.rows.item(i).created_on,
               ]);
             }
+            setIsFetching(false);
           }
           setIsloading(false);
         });
@@ -94,6 +102,8 @@ export function showUpcommingTodos(props) {
       <FlatList
         data={upcomming}
         extraData={upcomming}
+        onRefresh={() => onRefresh()}
+        refreshing={isFetching}
         renderItem={({item, index}) => (
           <TouchableOpacity
             onPress={() =>
@@ -128,14 +138,14 @@ export function showUpcommingTodos(props) {
           </TouchableOpacity>
         )}
       />
-     <SelectDate/>
+      <SelectDate />
     </View>
   ) : (
     <View style={{flex: 1}}>
       <View style={styles.noTask}>
         <Text style={styles.noTaskTitle}> {notaskMsg} </Text>
       </View>
-      <SelectDate/>
+      <SelectDate />
     </View>
   );
 }
@@ -160,6 +170,6 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: '#0278ae',
+    backgroundColor: appColor,
   },
 });

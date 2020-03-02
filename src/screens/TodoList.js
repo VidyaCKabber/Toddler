@@ -8,7 +8,7 @@ export default function TodoList(props) {
   return (
     <View style={styles.listContainer}>
       <Icon
-        name={props.checked?"check-square":"square"}
+        name={props.checked ? 'check-square' : 'square'}
         size={30}
         color={props.checked ? 'green' : 'black'}
         style={{marginLeft: 15}}

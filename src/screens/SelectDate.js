@@ -34,7 +34,7 @@ export function SelectDate(props) {
 
               setTimeout(() => {
                 setIsloading(false);
-              }, 5000);
+              }, 1000);
               setIsVisible(false);
 
               props.navigation.navigate('Upcomming', {
