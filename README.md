@@ -10,7 +10,7 @@ Toddler is To-Do List Mobile app which is developped using react-native hooks an
 
 </div>
 
-<div float="left">
+<div style="margin-top:30;" float="left">
     
    <img src="https://github.com/VidyaCKabber/Toddler/blob/releaseversion/ViewAppScreens/today_empty.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="270" height="500" />
    <img src="https://github.com/VidyaCKabber/Toddler/blob/releaseversion/ViewAppScreens/today.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="270" height="500" />
