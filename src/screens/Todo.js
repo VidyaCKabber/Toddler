@@ -217,7 +217,7 @@ export function Todo(props) {
                 {percent}% tasks are completed{' '}
               </Text>
             ) : (
-              <Text style={styles.message}>{completedMsg}</Text>
+              <Text style={[styles.message,styles.doneColor]}>{completedMsg}</Text>
             )}
           </View>
           <ScrollView>
@@ -314,5 +314,10 @@ const styles = StyleSheet.create({
     backgroundColor: appColor,
     borderRadius: 20,
     fontSize: 20,
+    color:'white'
   },
+  doneColor:{
+    color:'green',
+    fontWeight:'bold'
+  }
 });
